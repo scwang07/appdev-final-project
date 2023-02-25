@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      Meeting user #<%= @the_meeting_user.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/meeting_users">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_meeting_user/<%= @the_meeting_user.id %>">
+          Delete meeting user
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Meeting
+      </dt>
+      <dd>
+        <%= @the_meeting_user.meeting_id %>
+      </dd>
+
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_meeting_user.user_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_meeting_user.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_meeting_user.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit meeting user
+    </h2>
+
+    <form action="/modify_meeting_user/<%= @the_meeting_user.id %>"  method="post" >
+      <div>
+        <label for="meeting_id_box">
+          Meeting
+        </label>
+
+        <input type="text" id="meeting_id_box" name="query_meeting_id" value="<%= @the_meeting_user.meeting_id %>">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_meeting_user.user_id %>">
+      </div>
+
+      <button>
+        Update meeting user
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

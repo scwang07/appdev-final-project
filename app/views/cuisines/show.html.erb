@@ -1,0 +1,71 @@
+<div>
+  <div>
+    <h1>
+      Cuisine #<%= @the_cuisine.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/cuisines">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_cuisine/<%= @the_cuisine.id %>">
+          Delete cuisine
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Name
+      </dt>
+      <dd>
+        <%= @the_cuisine.name %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_cuisine.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_cuisine.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit cuisine
+    </h2>
+
+    <form action="/modify_cuisine/<%= @the_cuisine.id %>"  method="post" >
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" value="<%= @the_cuisine.name %>">
+      </div>
+
+      <button>
+        Update cuisine
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

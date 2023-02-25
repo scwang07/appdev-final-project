@@ -1,0 +1,117 @@
+<div>
+  <div>
+    <h1>
+      Meeting #<%= @the_meeting.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/meetings">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_meeting/<%= @the_meeting.id %>">
+          Delete meeting
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Time
+      </dt>
+      <dd>
+        <%= @the_meeting.time %>
+      </dd>
+
+      <dt>
+        Restaurant
+      </dt>
+      <dd>
+        <%= @the_meeting.restaurant_id %>
+      </dd>
+
+      <dt>
+        Status
+      </dt>
+      <dd>
+        <%= @the_meeting.status %>
+      </dd>
+
+      <dt>
+        Reservation status
+      </dt>
+      <dd>
+        <%= @the_meeting.reservation_status %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_meeting.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_meeting.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit meeting
+    </h2>
+
+    <form action="/modify_meeting/<%= @the_meeting.id %>"  method="post" >
+      <div>
+        <label for="time_box">
+          Time
+        </label>
+
+        <input type="datetime-local" id="time_box" name="query_time"
+         value="<%= @the_meeting.time %>">
+      </div>
+
+      <div>
+        <label for="restaurant_id_box">
+          Restaurant
+        </label>
+
+        <input type="text" id="restaurant_id_box" name="query_restaurant_id" value="<%= @the_meeting.restaurant_id %>">
+      </div>
+
+      <div>
+        <label for="status_box">
+          Status
+        </label>
+
+        <input type="text" id="status_box" name="query_status" value="<%= @the_meeting.status %>">
+      </div>
+
+      <div>
+        <label for="reservation_status_box">
+          Reservation status
+        </label>
+
+        <input type="text" id="reservation_status_box" name="query_reservation_status" value="<%= @the_meeting.reservation_status %>">
+      </div>
+
+      <button>
+        Update meeting
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

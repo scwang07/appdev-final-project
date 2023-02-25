@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      List of all cuisines
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new cuisine
+    </h2>
+
+    <form action="/insert_cuisine" method="post">
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <button>
+        Create cuisine
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_cuisines.each do |a_cuisine| %>
+      <tr>
+        <td>
+          <%= a_cuisine.id %>
+        </td>
+
+        <td>
+          <%= a_cuisine.name %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_cuisine.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_cuisine.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/cuisines/<%= a_cuisine.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

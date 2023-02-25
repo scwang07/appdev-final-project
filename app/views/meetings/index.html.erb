@@ -1,0 +1,134 @@
+<div>
+  <div>
+    <h1>
+      List of all meetings
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new meeting
+    </h2>
+
+    <form action="/insert_meeting" method="post">
+      <div>
+        <label for="time_box">
+          Time
+        </label>
+
+        <input type="datetime-local" id="time_box" name="query_time">
+      </div>
+
+      <div>
+        <label for="restaurant_id_box">
+          Restaurant
+        </label>
+
+        <input type="text" id="restaurant_id_box" name="query_restaurant_id">
+      </div>
+
+      <div>
+        <label for="status_box">
+          Status
+        </label>
+
+        <input type="text" id="status_box" name="query_status">
+      </div>
+
+      <div>
+        <label for="reservation_status_box">
+          Reservation status
+        </label>
+
+        <input type="text" id="reservation_status_box" name="query_reservation_status">
+      </div>
+
+      <button>
+        Create meeting
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Time
+        </th>
+
+        <th>
+          Restaurant
+        </th>
+
+        <th>
+          Status
+        </th>
+
+        <th>
+          Reservation status
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_meetings.each do |a_meeting| %>
+      <tr>
+        <td>
+          <%= a_meeting.id %>
+        </td>
+
+        <td>
+          <%= a_meeting.time %>
+        </td>
+
+        <td>
+          <%= a_meeting.restaurant_id %>
+        </td>
+
+        <td>
+          <%= a_meeting.status %>
+        </td>
+
+        <td>
+          <%= a_meeting.reservation_status %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_meeting.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_meeting.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/meetings/<%= a_meeting.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

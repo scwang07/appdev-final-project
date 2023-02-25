@@ -1,0 +1,116 @@
+<div>
+  <div>
+    <h1>
+      Restaurant #<%= @the_restaurant.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/restaurants">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_restaurant/<%= @the_restaurant.id %>">
+          Delete restaurant
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Name
+      </dt>
+      <dd>
+        <%= @the_restaurant.name %>
+      </dd>
+
+      <dt>
+        Description
+      </dt>
+      <dd>
+        <%= @the_restaurant.description %>
+      </dd>
+
+      <dt>
+        Location
+      </dt>
+      <dd>
+        <%= @the_restaurant.location %>
+      </dd>
+
+      <dt>
+        Reservation possible
+      </dt>
+      <dd>
+        <%= @the_restaurant.reservation_possible %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_restaurant.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_restaurant.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit restaurant
+    </h2>
+
+    <form action="/modify_restaurant/<%= @the_restaurant.id %>"  method="post" >
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" value="<%= @the_restaurant.name %>">
+      </div>
+
+      <div>
+        <label for="description_box">
+          Description
+        </label>
+
+        <textarea id="description_box" name="query_description"><%= @the_restaurant.description %></textarea>
+      </div>
+
+      <div>
+        <label for="location_box">
+          Location
+        </label>
+
+        <input type="text" id="location_box" name="query_location" value="<%= @the_restaurant.location %>">
+      </div>
+
+      <div>
+        <input type="checkbox" id="reservation_possible_box" name="query_reservation_possible" value="1" <%= "checked" if @the_restaurant.reservation_possible %>>
+
+        <label for="reservation_possible_box">
+            Reservation possible
+        </label>
+      </div>
+
+      <button>
+        Update restaurant
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

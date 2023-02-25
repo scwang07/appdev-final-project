@@ -1,0 +1,102 @@
+<div>
+  <div>
+    <h1>
+      List of all meeting users
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new meeting user
+    </h2>
+
+    <form action="/insert_meeting_user" method="post">
+      <div>
+        <label for="meeting_id_box">
+          Meeting
+        </label>
+
+        <input type="text" id="meeting_id_box" name="query_meeting_id">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id">
+      </div>
+
+      <button>
+        Create meeting user
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Meeting
+        </th>
+
+        <th>
+          User
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_meeting_users.each do |a_meeting_user| %>
+      <tr>
+        <td>
+          <%= a_meeting_user.id %>
+        </td>
+
+        <td>
+          <%= a_meeting_user.meeting_id %>
+        </td>
+
+        <td>
+          <%= a_meeting_user.user_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_meeting_user.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_meeting_user.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/meeting_users/<%= a_meeting_user.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
