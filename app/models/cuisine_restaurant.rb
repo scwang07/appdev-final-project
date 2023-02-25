@@ -9,4 +9,6 @@
 #  restaurant_id :integer
 #
 class CuisineRestaurant < ApplicationRecord
+  belongs_to(:restaurant, { :required => true, :class_name => "Restaurant", :foreign_key => "restaurant_id" })
+  belongs_to(:cuisine, { :required => true, :class_name => "Cuisine", :foreign_key => "cuisine_id" })
 end

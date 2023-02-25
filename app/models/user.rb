@@ -16,4 +16,7 @@ class User < ApplicationRecord
   validates :email, :uniqueness => { :case_sensitive => false }
   validates :email, :presence => true
   has_secure_password
+
+  has_many(:meeting_users, { :class_name => "MeetingUser", :foreign_key => "user_id", :dependent => :nullify })
+  has_many(:meetings, { :through => :meeting_users, :source => :meeting })
 end
