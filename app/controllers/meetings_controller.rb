@@ -9,8 +9,9 @@ class MeetingsController < ApplicationController
   def available_requests
     user_age = @current_user.age
     user_gender = @current_user.sex
-    matching_meetings = Meeting.where("age_max > ? AND age_min < ?",user_age, user_age)
-    matching_meetings = matching_meetings.where({:sex => user_gender}).or(matching_meetings.where({:sex => "none"}))
+    matching_meetings = Meeting.where("age_max > ?", user_age).or(Meeting.where({:age_max=>0}))
+    matching_meetings = matching_meetings.where("age_min < ?", user_age).or(Meeting.where({:age_min=>0}))
+    matching_meetings = matching_meetings.where({:sex => user_gender}).or(matching_meetings.where({:sex => nil}))
 
     @list_of_meetings = matching_meetings.order({ :created_at => :desc })
 
@@ -44,8 +45,9 @@ class MeetingsController < ApplicationController
       the_meeting_user = MeetingUser.new
       the_meeting_user.meeting_id = the_meeting.id
       the_meeting_user.user_id = session[:user_id]
+      the_meeting_user.user_order = 1
       the_meeting_user.save
-      redirect_to("/meetings", { :notice => "Meeting created successfully." })
+      redirect_to("/meetings", { :notice => "Eat-up request created successfully!" })
     else
       redirect_to("/meetings", { :alert => the_meeting.errors.full_messages.to_sentence })
     end

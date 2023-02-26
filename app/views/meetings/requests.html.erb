@@ -1,5 +1,7 @@
 <h1>Available Eat-ups</h1>
 
+<% @list_of_meetings = @list_of_meetings - @current_user.meetings %>
+
 <% if @list_of_meetings.count == 0 %>
 <div>No available Eat-ups right now. Come back later or <a href="/meetings">create your own!</a></div>
 <br>
@@ -16,11 +18,7 @@
         </th>
 
         <th>
-          Status
-        </th>
-
-        <th>
-          Reservation?
+          Reservation already made?
         </th>
 
         <th>
@@ -46,10 +44,6 @@
         </td>
 
         <td>
-          <%= a_meeting.status %>
-        </td>
-
-        <td>
           <%= a_meeting.reservation_status %>
         </td>
 
@@ -61,8 +55,17 @@
         </td>
 
         <td>
-          <a href="/meetings/<%= a_meeting.id %>">
-            Edit Details
+          <form action="/insert_meeting_user" method="post">
+          <div>
+            <input type="hidden" id="meeting_box" name="query_meeting_id" value="<%= a_meeting.id %>">
+          </div>
+          <div>
+            <input type="hidden" id="user_box" name="query_user_id" value="<%= @current_user.id %>">
+          </div>
+            <button>
+              Let's Eat-Up!
+            </button>
+          </form>
           </a>
         </td>
       </tr>

@@ -21,12 +21,16 @@ class MeetingUsersController < ApplicationController
     the_meeting_user = MeetingUser.new
     the_meeting_user.meeting_id = params.fetch("query_meeting_id")
     the_meeting_user.user_id = params.fetch("query_user_id")
+    the_meeting_user.user_order = 2
 
     if the_meeting_user.valid?
       the_meeting_user.save
-      redirect_to("/meeting_users", { :notice => "Meeting user created successfully." })
+      the_meeting = the_meeting_user.meeting
+      the_meeting.status = "Full"
+      the_meeting.save
+      redirect_to("/meetings", { :notice => "Updated successfully!" })
     else
-      redirect_to("/meeting_users", { :alert => the_meeting_user.errors.full_messages.to_sentence })
+      redirect_to("/meetings", { :alert => the_meeting_user.errors.full_messages.to_sentence })
     end
   end
 

@@ -55,21 +55,29 @@
           Minimum age
         </label>
 
-        <input type="text" id="age_min" value="none" name="query_age_min">
+        <input type="text" id="age_min" name="query_age_min">
       </div>
       <div>
         <label for="age_max">
           Maximum age
         </label>
 
-        <input type="text" id="age_max" value="none" name="query_age_max">
+        <input type="text" id="age_max" name="query_age_max">
       </div>
       <div>
-        <label for="gender">
+        <label for="req_gender">
           Gender
         </label>
 
-        <input type="text" id="req_gender" value="none" name="query_req_gender">
+        <select id="req_gender" name="query_req_gender">
+          <option value="nil">None</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Bi">Bisexual</option>          
+          <option value="Trans">Transexual</option>
+          <option value="Asexual">Asexual</option>
+          <option value="Non-binary">Non-binary</option>
+        </select>
       </div>
 
       <br>
@@ -85,6 +93,9 @@
 <hr>
 <h2>My Eat-Ups</h2>
 
+<% if @list_of_meetings.count == 0 %>
+<div>You haven't created any Eat-ups yet.</div>
+<% else %>
 <div>
   <div>
     <table border="1">
@@ -151,5 +162,6 @@
     </table>
   </div>
 </div>
+<% end %>
 
 <hr>
