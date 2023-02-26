@@ -3,15 +3,17 @@ class MeetingsController < ApplicationController
     matching_meetings = @current_user.meetings
     @list_of_meetings = matching_meetings.order({ :created_at => :desc })
 
+
     render({ :template => "meetings/index.html.erb" })
   end
 
   def available_requests
     user_age = @current_user.age
     user_gender = @current_user.sex
-    matching_meetings = Meeting.where("age_max > ?", user_age).or(Meeting.where({:age_max=>0}))
-    matching_meetings = matching_meetings.where("age_min < ?", user_age).or(Meeting.where({:age_min=>0}))
-    matching_meetings = matching_meetings.where({:sex => user_gender}).or(matching_meetings.where({:sex => nil}))
+    matching_meetings = Meeting.where("age_max > ? OR age_max IS NULL", user_age)
+    matching_meetings = Meeting.where("age_min < ? OR age_min IS NULL", user_age)
+    matching_meetings = matching_meetings.where({:sex => user_gender}).or(matching_meetings.where({:sex => "nil"}))
+    matching_meetings = matching_meetings.where({:status => "Pending"})
 
     @list_of_meetings = matching_meetings.order({ :created_at => :desc })
 
@@ -25,6 +27,14 @@ class MeetingsController < ApplicationController
     matching_meetings = Meeting.where({ :id => the_id })
 
     @the_meeting = matching_meetings.at(0)
+    @the_meeting_users = MeetingUser.where({:meeting_id => the_id})
+
+    @user_one_id = @the_meeting_users.where({:user_order => 1}).first.user_id
+    
+    @user_two_id = @the_meeting_users.where({:user_order => 2}).first
+    if @user_two_id != nil
+      @user_two_id = @user_two_id.user_id
+    end
 
     render({ :template => "meetings/show.html.erb" })
   end
@@ -67,7 +77,7 @@ class MeetingsController < ApplicationController
 
     if the_meeting.valid?
       the_meeting.save
-      redirect_to("/meetings/#{the_meeting.id}", { :notice => "Meeting updated successfully."} )
+      redirect_to("/meetings/#{the_meeting.id}", { :notice => "Eat-up updated successfully."} )
     else
       redirect_to("/meetings/#{the_meeting.id}", { :alert => the_meeting.errors.full_messages.to_sentence })
     end
@@ -79,6 +89,6 @@ class MeetingsController < ApplicationController
 
     the_meeting.destroy
 
-    redirect_to("/meetings", { :notice => "Meeting deleted successfully."} )
+    redirect_to("/meetings", { :notice => "Eat-up deleted successfully."} )
   end
 end

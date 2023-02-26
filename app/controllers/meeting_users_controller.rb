@@ -50,11 +50,14 @@ class MeetingUsersController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path_id")
-    the_meeting_user = MeetingUser.where({ :id => the_id }).at(0)
-
+    user_id = params.fetch("user_id")
+    meeting_id = params.fetch("meeting_id")
+    the_meeting_user = MeetingUser.where({ :meeting_id => meeting_id }).where({:user_id => user_id}).at(0)
+    the_meeting = Meeting.where({:id => meeting_id}).first
+    the_meeting.status = "Pending"
+    the_meeting.save
     the_meeting_user.destroy
 
-    redirect_to("/meeting_users", { :notice => "Meeting user deleted successfully."} )
+    redirect_to("/meetings", { :notice => "Left Eat-up successfully."} )
   end
 end

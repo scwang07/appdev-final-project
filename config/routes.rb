@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   post("/modify_meeting_user/:path_id", { :controller => "meeting_users", :action => "update" })
   
   # DELETE
-  get("/delete_meeting_user/:path_id", { :controller => "meeting_users", :action => "destroy" })
+  get("/delete_meeting_user/:meeting_id/:user_id", { :controller => "meeting_users", :action => "destroy" })
 
   #------------------------------
 

@@ -12,9 +12,17 @@
       </div>
 
       <div>
-        <a href="/delete_meeting/<%= @the_meeting.id %>">
-          Delete Eat-up
-        </a>
+        <% if @current_user.id == @user_one_id %>
+          <a href="/delete_meeting/<%= @the_meeting.id %>">
+            Delete Eat-up
+          </a>
+        <% elsif @current_user.id == @user_two_id %>
+          <a href="/delete_meeting_user/<%= @the_meeting.id %>/<%= @current_user.id %>">
+            Leave Eat-up
+          </a>
+        <% else %>
+          <div>Looks like there's nothing here!</div>
+        <% end %>
       </div>
     </div>
 
@@ -69,75 +77,84 @@
 
 <div>
   <div>
-    <h2>
-      Edit Eat-up
-    </h2>
+    <% if @current_user.id == @user_one_id %>
+      <h2>
+        Edit Eat-up
+      </h2>
 
-    <form action="/modify_meeting/<%= @the_meeting.id %>"  method="post" >
+      <form action="/modify_meeting/<%= @the_meeting.id %>"  method="post" >
+        <div>
+          <label for="time_box">
+            Time
+          </label>
+
+          <input type="datetime-local" id="time_box" name="query_time"
+          value="<%= @the_meeting.time %>">
+        </div>
+
+        <div>
+
+          <label for="restaurant_id_box">
+            Restaurant
+          </label>
+
+          <select id="restaurant_id_box" name="query_restaurant_id">
+            <% Restaurant.all.each do |a_restaurant| %>
+              <option value="<%= a_restaurant.id %>"><%= a_restaurant.name %></option>
+            <% end %>
+          </select>
+        </div>
+
+        <div>
+          <input type="hidden" id="status_box" name="query_status" value="<%= @the_meeting.status %>">
+        </div>
+
+        <div>
+          <label for="reservation_status_box">
+            Reservation status
+          </label>
+
+          <input type="text" id="reservation_status_box" name="query_reservation_status" value="<%= @the_meeting.reservation_status %>">
+        </div>
+
+        <% if @the_meeting.status=="Pending" %>
+        <div>
+          <label for="age_min">
+            Minimum age
+          </label>
+
+          <input type="text" id="age_min" value="<%= @the_meeting.age_min %>" name="query_age_min">
+        </div>
+        <div>
+          <label for="age_max">
+            Maximum age
+          </label>
+
+          <input type="text" id="age_max" value="<%= @the_meeting.age_max %>" name="query_age_max">
+        </div>
       <div>
-        <label for="time_box">
-          Time
-        </label>
-
-        <input type="datetime-local" id="time_box" name="query_time"
-         value="<%= @the_meeting.time %>">
-      </div>
-
-      <div>
-
-        <label for="restaurant_id_box">
-          Restaurant
-        </label>
-
-        <select id="restaurant_id_box" name="query_restaurant_id">
-          <% Restaurant.all.each do |a_restaurant| %>
-            <option value="<%= a_restaurant.id %>"><%= a_restaurant.name %></option>
-          <% end %>
-        </select>
-      </div>
-
-      <div>
-        <input type="hidden" id="status_box" name="query_status" value="<%= @the_meeting.status %>">
-      </div>
-
-      <div>
-        <label for="reservation_status_box">
-          Reservation status
-        </label>
-
-        <input type="text" id="reservation_status_box" name="query_reservation_status" value="<%= @the_meeting.reservation_status %>">
-      </div>
-
-      <% if @the_meeting.status=="pending" %>
-      <div>
-        <label for="age_min">
-          Minimum age
-        </label>
-
-        <input type="text" id="age_min" value="<%= @the_meeting.age_min %>" name="query_age_min">
-      </div>
-      <div>
-        <label for="age_max">
-          Maximum age
-        </label>
-
-        <input type="text" id="age_max" value="<%= @the_meeting.age_max %>" name="query_age_max">
-      </div>
-      <div>
-        <label for="gender">
+        <label for="req_gender">
           Gender
         </label>
 
-        <input type="text" id="req_gender" value="<%= @the_meeting.req_gender %>" name="query_req_gender">
+        <select id="req_gender" name="query_req_gender" value="<%= @the_meeting.sex %>">
+          <option value="nil">No preference</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Bi">Bisexual</option>          
+          <option value="Trans">Transexual</option>
+          <option value="Asexual">Asexual</option>
+          <option value="Non-binary">Non-binary</option>
+        </select>
       </div>
 
-      <% end %>
+        <% end %>
 
-      <button>
-        Update Eat-up request
-      </button>
-    </form>
+        <button>
+          Update Eat-up request
+        </button>
+      </form>
+    </div>
   </div>
-</div>
-
-<hr>
+  <hr>
+  <% end %>
