@@ -1,0 +1,76 @@
+<div>
+  <div>
+    <h1>
+      Open a new Eat-up request
+    </h1>
+
+    <form action="/insert_meeting" action="/insert_meeting_user" method="post">
+      <div>
+        <label for="time_box">
+          Time
+        </label>
+
+        <input type="datetime-local" id="time_box" name="query_time">
+      </div>
+
+      <div>
+        <label for="restaurant_id_box">
+          Restaurant
+        </label>
+
+      <input type="text" id="restaurant_id_box" name="query_restaurant_id" value="<%= @the_restaurant.name %>">
+      </div>
+
+
+      <div>
+        <input type="hidden" id="status_box" name="query_status" value="Pending">
+      </div>
+
+      <div>
+        <label for="reservation_status_box">
+          Reservation already made? Yes/No
+        </label>
+
+        <input type="text" id="reservation_status_box" name="query_reservation_status">
+      </div>
+
+        <h3>Optional Eat-up Criteria</h3>
+        <h4>Specify if you want to ensure your Eat-up partner matches the following:</h4>
+      <div>
+        <label for="age_min">
+          Minimum age
+        </label>
+
+        <input type="text" id="age_min" placeholder="optional" name="query_age_min">
+      </div>
+      <div>
+        <label for="age_max">
+          Maximum age
+        </label>
+
+        <input type="text" id="age_max" placeholder="optional" name="query_age_max">
+      </div>
+      <div>
+        <label for="req_gender">
+          Gender
+        </label>
+
+        <select id="req_gender" name="query_req_gender">
+          <option value="nil">No preference</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Bi">Bisexual</option>          
+          <option value="Trans">Transexual</option>
+          <option value="Asexual">Asexual</option>
+          <option value="Non-binary">Non-binary</option>
+        </select>
+      </div>
+
+      <br>
+
+      <button>
+        Create Eat-up invitation
+      </button>
+    </form>
+  </div>
+</div>

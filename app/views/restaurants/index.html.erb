@@ -6,13 +6,77 @@
   </div>
 </div>
 
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          No
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Description
+        </th>
+
+        <th>
+          Location
+        </th>
+
+        <th>
+          Reservation possible?
+        </th>
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_restaurants.each do |a_restaurant| %>
+      <tr>
+        <td>
+          <%= a_restaurant.id %>
+        </td>
+
+        <td>
+          <a href="/restaurants/<%= a_restaurant.id %>"><%= a_restaurant.name %></a>
+        </td>
+
+        <td>
+          <%= a_restaurant.description %>
+        </td>
+
+        <td>
+          <%= a_restaurant.location %>
+        </td>
+
+        <td>
+          <%= a_restaurant.reservation_possible %>
+        </td>
+
+        <td>
+          <a href="/meetings/restaurant/<%= a_restaurant.id %>">
+            Organize an Eat-up here!
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<br>
 <hr>
 
 <div>
   <div>
     <h2>
-      Add a new restaurant
+      Don't see the restaurant you're looking for?
     </h2>
+    <h3>
+      Add it to the master list here!
+    </h3>
 
     <form action="/insert_restaurant" method="post">
       <div>
@@ -51,82 +115,3 @@
     </form>
   </div>
 </div>
-
-<hr>
-<div>
-  <div>
-    <table border="1">
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Name
-        </th>
-
-        <th>
-          Description
-        </th>
-
-        <th>
-          Location
-        </th>
-
-        <th>
-          Reservation possible
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_restaurants.each do |a_restaurant| %>
-      <tr>
-        <td>
-          <%= a_restaurant.id %>
-        </td>
-
-        <td>
-          <%= a_restaurant.name %>
-        </td>
-
-        <td>
-          <%= a_restaurant.description %>
-        </td>
-
-        <td>
-          <%= a_restaurant.location %>
-        </td>
-
-        <td>
-          <%= a_restaurant.reservation_possible %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_restaurant.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_restaurant.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/restaurants/<%= a_restaurant.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-</div>
-
-<hr>

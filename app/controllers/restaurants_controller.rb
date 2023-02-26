@@ -2,7 +2,7 @@ class RestaurantsController < ApplicationController
   def index
     matching_restaurants = Restaurant.all
 
-    @list_of_restaurants = matching_restaurants.order({ :created_at => :desc })
+    @list_of_restaurants = matching_restaurants.order({ :created_at => :asc })
 
     render({ :template => "restaurants/index.html.erb" })
   end

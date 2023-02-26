@@ -7,6 +7,13 @@ class MeetingsController < ApplicationController
     render({ :template => "meetings/index.html.erb" })
   end
 
+  def from_restaurant
+    restaurant_id = params.fetch("path_id")
+    matching_restaurants = Restaurant.where({:id => restaurant_id})
+    @the_restaurant = matching_restaurants.first
+    render({:template => "meetings/restaurant.html.erb"})
+  end
+
   def available_requests
     user_age = @current_user.age
     user_gender = @current_user.sex
