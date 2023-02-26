@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      List of all meetings
+      Let's Eat-up!
     </h1>
   </div>
 </div>
@@ -11,10 +11,10 @@
 <div>
   <div>
     <h2>
-      Add a new meeting
+      Open a new Eat-up request
     </h2>
 
-    <form action="/insert_meeting" method="post">
+    <form action="/insert_meeting" action="/insert_meeting_user" method="post">
       <div>
         <label for="time_box">
           Time
@@ -28,47 +28,72 @@
           Restaurant
         </label>
 
-        <input type="text" id="restaurant_id_box" name="query_restaurant_id">
+        <select id="restaurant_id_box" name="query_restaurant_id">
+          <% Restaurant.all.each do |a_restaurant| %>
+            <option value="<%= a_restaurant.id %>"><%= a_restaurant.name %></option>
+          <% end %>
+        </select>
       </div>
 
-      <div>
-        <label for="status_box">
-          Status
-        </label>
 
-        <input type="text" id="status_box" name="query_status">
+      <div>
+        <input type="hidden" id="status_box" name="query_status" value="Pending">
       </div>
 
       <div>
         <label for="reservation_status_box">
-          Reservation status
+          Reservation already made? Yes/No
         </label>
 
         <input type="text" id="reservation_status_box" name="query_reservation_status">
       </div>
 
+        <h3>Optional Eat-up Criteria</h3>
+        <h4>Specify if you want to ensure your Eat-up partner matches the following:</h4>
+      <div>
+        <label for="age_min">
+          Minimum age
+        </label>
+
+        <input type="text" id="age_min" value="none" name="query_age_min">
+      </div>
+      <div>
+        <label for="age_max">
+          Maximum age
+        </label>
+
+        <input type="text" id="age_max" value="none" name="query_age_max">
+      </div>
+      <div>
+        <label for="gender">
+          Gender
+        </label>
+
+        <input type="text" id="req_gender" value="none" name="query_req_gender">
+      </div>
+
+      <br>
+
       <button>
-        Create meeting
+        Create Eat-up invitation
       </button>
     </form>
   </div>
 </div>
 
+<br>
 <hr>
+<h2>My Eat-Ups</h2>
+
 <div>
   <div>
     <table border="1">
       <tr>
         <th>
-          ID
-        </th>
-
-        <th>
-          Time
-        </th>
-
-        <th>
           Restaurant
+        </th>
+        <th>
+          Time of Eat-up
         </th>
 
         <th>
@@ -76,7 +101,7 @@
         </th>
 
         <th>
-          Reservation status
+          Reservation?
         </th>
 
         <th>
@@ -94,15 +119,11 @@
       <% @list_of_meetings.each do |a_meeting| %>
       <tr>
         <td>
-          <%= a_meeting.id %>
+          <%= a_meeting.restaurant.name %>
         </td>
 
         <td>
-          <%= a_meeting.time %>
-        </td>
-
-        <td>
-          <%= a_meeting.restaurant_id %>
+          <%= a_meeting.time.strftime("%A, %d %b %Y %l:%M %p") %>
         </td>
 
         <td>
@@ -122,7 +143,7 @@
 
         <td>
           <a href="/meetings/<%= a_meeting.id %>">
-            Show details
+            Edit Details
           </a>
         </td>
       </tr>

@@ -16,13 +16,37 @@
   </head>
 
   <body>
+  <nav>
+    <% if session[:user_id] != nil %>
     <ul>
-      <li><a href="/meetings">Meet-Ups</a></li>
-      <li><a href="/restaurants">Restaurants</a></li>
+      <div>Logged in as: <%= @current_user.first_name + " " + @current_user.last_name %></div>
       <li><a href="/edit_user_profile">Edit Profile</a></li>
-      <li><a href="/user_sign_in">Sign In</a></li>
       <li><a href="/user_sign_out">Sign Out</a></li>
+      <br>
+      <li><a href="/">Home</a></li>
+      <li><a href="/meetings">My Eat-ups</a></li>
+      <li><a href="/meetings/availabilities">Browse available Eat-ups</a></li>
+      <li><a href="/restaurants">Browse Restaurants</a></li>
     </ul>
+    <% else %>
+    <ul>
+      <li><a href="/user_sign_in">Sign In</a></li>
+      <li><a href="/user_sign_up">Sign Up</a></li>
+    </ul>
+    <% end %>
+    </nav>
+    <% if notice.present? %>
+      <div class="alert">
+        <%= notice %>
+      </div>
+    <% end %>
+
+    <% if alert.present? %>
+      <div class="alert">
+        <%= alert %>
+      </div>
+    <% end %>
     <%= yield %>
+    	© Copyright 2023
   </body>
 </html>

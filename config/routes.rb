@@ -28,8 +28,12 @@ Rails.application.routes.draw do
           
   # READ
   get("/meetings", { :controller => "meetings", :action => "index" })
+
+  get("/meetings/availabilities", { :controller => "meetings", :action => "available_requests"})
   
   get("/meetings/:path_id", { :controller => "meetings", :action => "show" })
+
+ 
   
   # UPDATE
   

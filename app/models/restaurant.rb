@@ -13,4 +13,5 @@
 class Restaurant < ApplicationRecord
   has_many(:cuisine_restaurants, { :class_name => "CuisineRestaurant", :foreign_key => "restaurant_id", :dependent => :destroy })
   has_many(:cuisines, { :through => :cuisine_restaurants, :source => :cuisine })
+  has_many(:meetings, { :class_name => "Meeting", :foreign_key => "restaurant_id", :dependent => :destroy })
 end

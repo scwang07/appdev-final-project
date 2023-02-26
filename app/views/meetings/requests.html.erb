@@ -1,0 +1,73 @@
+<h1>Available Eat-ups</h1>
+
+<% if @list_of_meetings.count == 0 %>
+<div>No available Eat-ups right now. Come back later or <a href="/meetings">create your own!</a></div>
+<br>
+<% else %>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          Restaurant
+        </th>
+        <th>
+          Time of Eat-up
+        </th>
+
+        <th>
+          Status
+        </th>
+
+        <th>
+          Reservation?
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_meetings.each do |a_meeting| %>
+      <tr>
+        <td>
+          <%= a_meeting.restaurant.name %>
+        </td>
+
+        <td>
+          <%= a_meeting.time.strftime("%A, %d %b %Y %l:%M %p") %>
+        </td>
+
+        <td>
+          <%= a_meeting.status %>
+        </td>
+
+        <td>
+          <%= a_meeting.reservation_status %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_meeting.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_meeting.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/meetings/<%= a_meeting.id %>">
+            Edit Details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+<% end %>

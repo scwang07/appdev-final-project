@@ -19,4 +19,9 @@ class User < ApplicationRecord
 
   has_many(:meeting_users, { :class_name => "MeetingUser", :foreign_key => "user_id", :dependent => :nullify })
   has_many(:meetings, { :through => :meeting_users, :source => :meeting })
+
+  def age
+    user_age = ((Time.zone.now - self.dob.to_time) / 1.year.seconds).floor
+    return user_age
+  end
 end
