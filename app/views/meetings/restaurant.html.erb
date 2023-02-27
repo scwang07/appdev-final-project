@@ -1,7 +1,11 @@
 <div>
+  <a href="/restaurants">Go Back</a>
+</div>
+
+<div>
   <div>
     <h1>
-      Open a new Eat-up request
+      Open a new Eat-up at <%= @the_restaurant.name %>
     </h1>
 
     <form action="/insert_meeting" action="/insert_meeting_user" method="post">
@@ -14,13 +18,20 @@
       </div>
 
       <div>
-        <label for="restaurant_id_box">
+        <label for="restaurant_name_box">
           Restaurant
         </label>
 
-      <input type="text" id="restaurant_id_box" name="query_restaurant_id" value="<%= @the_restaurant.name %>">
+      <input type="text" id="restaurant_name_box" name="query_restaurant_name" value="<%= @the_restaurant.name %>" readonly>
       </div>
 
+      <label for="max_seats_box">
+        Max number of seats
+      </label>
+
+      <div>
+        <input type ="text" id="max_seats_box" name="query_max_seats">
+      </div>
 
       <div>
         <input type="hidden" id="status_box" name="query_status" value="Pending">
@@ -69,7 +80,7 @@
       <br>
 
       <button>
-        Create Eat-up invitation
+        Create Eat-up
       </button>
     </form>
   </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_26_170740) do
+ActiveRecord::Schema.define(version: 2023_02_27_012210) do
 
   create_table "cuisine_restaurants", force: :cascade do |t|
     t.integer "cuisine_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2023_02_26_170740) do
     t.integer "age_min"
     t.integer "age_max"
     t.string "sex"
+    t.integer "max_seats"
   end
 
   create_table "restaurants", force: :cascade do |t|

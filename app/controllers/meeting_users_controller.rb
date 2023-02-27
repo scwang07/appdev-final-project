@@ -19,14 +19,18 @@ class MeetingUsersController < ApplicationController
 
   def create
     the_meeting_user = MeetingUser.new
-    the_meeting_user.meeting_id = params.fetch("query_meeting_id")
+    the_meeting_id = params.fetch("query_meeting_id")
+    the_meeting_user.meeting_id = the_meeting_id
     the_meeting_user.user_id = params.fetch("query_user_id")
-    the_meeting_user.user_order = 2
-
-    if the_meeting_user.valid?
+    the_meeting = Meeting.where({:id => the_meeting_id}).first
+    num_existing_parties = the_meeting.meeting_users.count
+    
+    if the_meeting_user.valid? && the_meeting.status != "Full"
+      the_meeting_user.user_order = num_existing_parties + 1
       the_meeting_user.save
-      the_meeting = the_meeting_user.meeting
-      the_meeting.status = "Full"
+      if the_meeting_user.user_order == the_meeting.max_seats
+        the_meeting.status = "Full"
+      end
       the_meeting.save
       redirect_to("/meetings", { :notice => "Updated successfully!" })
     else

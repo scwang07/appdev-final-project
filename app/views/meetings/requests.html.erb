@@ -1,5 +1,26 @@
 <h1>Available Eat-ups</h1>
 
+<%= search_form_for @q do |f| %>
+  <p>Narrow down results:</p>
+
+  <div>
+    <%= f.label :time_gteq, "Time range beginning" %>
+    <%= f.text_field :time_gteq, :placeholder => "Filter for dates after..." %>
+  </div>
+
+    <div>
+    <%= f.label :time_lteq, "Time range end" %>
+    <%= f.text_field :time_lteq, :placeholder => "Filter for dates before..." %>
+  </div>
+
+  <%= f.submit :class => "btn btn-primary btn-block" %>
+  
+  <a href="/meetings/availabilities">Clear filters</a>
+
+<% end %>
+
+<br>
+
 <% @list_of_meetings = @list_of_meetings - @current_user.meetings %>
 
 <% if @list_of_meetings.count == 0 %>
@@ -17,6 +38,9 @@
           Time of Eat-up
         </th>
 
+        <th>
+          Seats Left
+        </th>
         <th>
           Reservation already made?
         </th>
@@ -41,6 +65,15 @@
 
         <td>
           <%= a_meeting.time.strftime("%A, %d %b %Y %l:%M %p") %>
+        </td>
+        
+        <td>
+          <%= a_meeting.seats_remaining %>
+          <% if a_meeting.seats_remaining == 1 %>
+            seat remaining
+          <% else %>
+            seats remaining
+          <% end %>
         </td>
 
         <td>

@@ -49,6 +49,18 @@
       </dd>
 
       <dt>
+        Seats Left
+      </dt>
+      <dd>
+        <%= @the_meeting.seats_remaining %>
+        <% if @the_meeting.seats_remaining == 1 %>
+          seat remaining
+        <% else %>
+          seats remaining
+        <% end %>
+      </dd>
+
+      <dt>
         Reservation status
       </dt>
       <dd>
@@ -117,6 +129,8 @@
         </div>
 
         <% if @the_meeting.status=="Pending" %>
+        <br>
+        <h3>Optional Eat-up criteria</h3>
         <div>
           <label for="age_min">
             Minimum age
@@ -147,12 +161,15 @@
         </select>
       </div>
 
+      <br>
+
         <% end %>
 
         <button>
           Update Eat-up request
         </button>
       </form>
+      <br>
     </div>
   </div>
   <hr>

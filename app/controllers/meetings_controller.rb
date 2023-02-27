@@ -3,6 +3,9 @@ class MeetingsController < ApplicationController
     matching_meetings = @current_user.meetings
     @list_of_meetings = matching_meetings.order({ :created_at => :desc })
 
+    @list_of_created_meetings = @current_user.meetings.joins(:meeting_users).where("meeting_users.user_id = ? AND meeting_users.user_order = ?", @current_user.id, 1).order(created_at: :desc).distinct
+
+    @list_of_joined_meetings = @current_user.meetings.joins(:meeting_users).where("meeting_users.user_id = ? AND meeting_users.user_order != ?", @current_user.id, 1).order(created_at: :desc).distinct
 
     render({ :template => "meetings/index.html.erb" })
   end
@@ -17,12 +20,14 @@ class MeetingsController < ApplicationController
   def available_requests
     user_age = @current_user.age
     user_gender = @current_user.sex
+    
     matching_meetings = Meeting.where("age_max > ? OR age_max IS NULL", user_age)
     matching_meetings = Meeting.where("age_min < ? OR age_min IS NULL", user_age)
     matching_meetings = matching_meetings.where({:sex => user_gender}).or(matching_meetings.where({:sex => "nil"}))
     matching_meetings = matching_meetings.where({:status => "Pending"})
 
-    @list_of_meetings = matching_meetings.order({ :created_at => :desc })
+    @q = matching_meetings.ransack(params[:q])
+    @list_of_meetings = @q.result.order({ :created_at => :desc })
 
     render({ :template => "meetings/requests.html.erb" })
   end
@@ -48,14 +53,15 @@ class MeetingsController < ApplicationController
 
   def create
     the_meeting = Meeting.new
+    restaurant_name = params.fetch("query_restaurant_name")
     the_meeting.time = params.fetch("query_time")
-    the_meeting.restaurant_id = params.fetch("query_restaurant_id")
+    the_meeting.restaurant_id = Restaurant.where({:name => restaurant_name}).first.id
     the_meeting.status = params.fetch("query_status")
     the_meeting.reservation_status = params.fetch("query_reservation_status")
     the_meeting.age_min = params.fetch("query_age_min")
     the_meeting.age_max = params.fetch("query_age_max")
     the_meeting.sex = params.fetch("query_req_gender")
-
+    the_meeting.max_seats = params.fetch("query_max_seats")
 
     if the_meeting.valid?
       the_meeting.save
@@ -81,6 +87,8 @@ class MeetingsController < ApplicationController
     the_meeting.age_min = params.fetch("query_age_min")
     the_meeting.age_max = params.fetch("query_age_max")
     the_meeting.sex = params.fetch("query_req_gender")
+    the_meeting.max_seats = params.fetch("query_max_seats")
+    
 
     if the_meeting.valid?
       the_meeting.save
