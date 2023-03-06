@@ -5,9 +5,11 @@ class MeetingsController < ApplicationController
 
     @list_of_created_meetings = @current_user.meetings.joins(:meeting_users).where("meeting_users.user_id = ? AND meeting_users.user_order = ?", @current_user.id, 1).order(created_at: :desc).distinct
     @list_of_created_meetings = @list_of_created_meetings.where.not({ :status => "Cancelled" })
+    @list_of_created_active_meetings = @list_of_created_meetings.where("time > ?", Time.now)
 
     @list_of_joined_meetings = @current_user.meetings.joins(:meeting_users).where("meeting_users.user_id = ? AND meeting_users.user_order != ?", @current_user.id, 1).order(created_at: :desc).distinct
     @list_of_joined_meetings = @list_of_joined_meetings.where.not({ :status => "Cancelled" })
+    @list_of_joined_active_meetings = @list_of_joined_meetings.where("time > ?", Time.now)
 
     render({ :template => "meetings/index.html.erb" })
   end
@@ -30,6 +32,7 @@ class MeetingsController < ApplicationController
 
     @q = matching_meetings.ransack(params[:q])
     @list_of_meetings = @q.result.order({ :created_at => :desc })
+    @list_of_active_meetings = @list_of_meetings.where("time > ?", Time.now)
 
     render({ :template => "meetings/requests.html.erb" })
   end
@@ -92,6 +95,12 @@ class MeetingsController < ApplicationController
     end
   end
 
+  def review
+    the_id = params.fetch("path_id")
+    the_meeting = Meeting.where({ :id => the_id}).at(0)
+    render({:template => "/meetings/review.html.erb"})
+  end
+
   def destroy
     the_id = params.fetch("path_id")
     the_meeting = Meeting.where({ :id => the_id }).at(0)
@@ -99,13 +108,14 @@ class MeetingsController < ApplicationController
     the_meeting.status = "Cancelled"
     the_meeting.save
 
-    redirect_to("/meetings/cancelled", { :notice => "Eat-up cancelled successfully." })
+    redirect_to("/meetings/history", { :notice => "Eat-up cancelled successfully." })
   end
 
   def display_history
     matching_meetings = @current_user.meetings
-    @list_of_cancelled_meetings = matching_meetings.where({ :status => "cancelled" })
-    @list_of_past_meetings = matching_meetings.where.({ :time => Now }).where.not({ :status => "cancelled" })
+    @list_of_cancelled_meetings = matching_meetings.where({ :status => "Cancelled" })
+    @list_of_past_meetings = matching_meetings.where("time < ?", Time.now)
+    @list_of_past_uncancelled_meetings = @list_of_past_meetings.where.not({ :status => "Cancelled" })
     render({ :template => "/meetings/history.html.erb" })
   end
 end

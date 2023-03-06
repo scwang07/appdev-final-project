@@ -4,22 +4,21 @@
       Eat-up #<%= @the_meeting.id %> details
     </h1>
 
-    <div class="mb-3">
-      <div>
-        <a href="/meetings">
-          Go back
-        </a>
-      </div>
-
-      <div>
+    <div>
+      <div class="mb-3">
         <% if @this_meeting_user.user_order == 1 %>
-          <a href="/delete_meeting/<%= @the_meeting.id %>">
-            Delete Eat-up
-          </a>
+
+          <form action="/delete_meeting/<%= @the_meeting.id %>">
+            <button class="btn btn-danger">
+              Cancel Eat-up (for everyone!)
+            </button>
+          </form>
         <% elsif @this_meeting_user.user_order != nil %>
-          <a href="/delete_meeting_user/<%= @the_meeting.id %>/<%= @current_user.id %>">
-            Leave Eat-up
-          </a>
+          <form action="/delete_meeting_user/<%= @the_meeting.id %>/<%= @current_user.id %>">
+            <button class="btn btn-danger">
+              Leave Eat-up
+            </button>
+          </form>
         <% else %>
           <div>Looks like there's nothing here!</div>
         <% end %>
@@ -86,7 +85,6 @@
 
 <hr>
 
-
 <div>
   <div>
     <% if @current_user.id == @user_one_id %>
@@ -129,40 +127,40 @@
         </div>
 
         <% if @the_meeting.status=="Pending" %>
-        <br>
-        <h3>Optional Eat-up criteria</h3>
-        <div>
-          <label for="age_min">
-            Minimum age
-          </label>
+          <br>
+          <h3>Optional Eat-up criteria</h3>
+          <div>
+            <label for="age_min">
+              Minimum age
+            </label>
 
-          <input type="text" id="age_min" value="<%= @the_meeting.age_min %>" name="query_age_min">
-        </div>
-        <div>
-          <label for="age_max">
-            Maximum age
-          </label>
+            <input type="text" id="age_min" value="<%= @the_meeting.age_min %>" name="query_age_min">
+          </div>
+          <div>
+            <label for="age_max">
+              Maximum age
+            </label>
 
-          <input type="text" id="age_max" value="<%= @the_meeting.age_max %>" name="query_age_max">
-        </div>
-      <div>
-        <label for="req_gender">
-          Gender
-        </label>
+            <input type="text" id="age_max" value="<%= @the_meeting.age_max %>" name="query_age_max">
+          </div>
+          <div>
+            <label for="req_gender">
+              Gender
+            </label>
 
-        <select id="req_gender" name="query_req_gender" value="<%= @the_meeting.sex %>">
-          <option value="nil">No preference</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Bi">Bisexual</option>          
-          <option value="Trans">Transexual</option>
-          <option value="Asexual">Asexual</option>
-          <option value="Pansexual">Pansexual</option>
-          <option value="Non-conforming">Non-conforming</option>
-        </select>
-      </div>
+            <select id="req_gender" name="query_req_gender" value="<%= @the_meeting.sex %>">
+              <option value="nil">No preference</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Bi">Bisexual</option>
+              <option value="Trans">Transexual</option>
+              <option value="Asexual">Asexual</option>
+              <option value="Pansexual">Pansexual</option>
+              <option value="Non-conforming">Non-conforming</option>
+            </select>
+          </div>
 
-      <br>
+          <br>
 
         <% end %>
 
@@ -174,4 +172,10 @@
     </div>
   </div>
   <hr>
-  <% end %>
+<% end %>
+
+<div class="mb-2">
+  <a href="/meetings">
+    Go back
+  </a>
+</div>

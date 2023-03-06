@@ -20,7 +20,7 @@
           Time
         </label>
 
-        <input type="datetime-local" id="time_box" name="query_time">
+        <input type="datetime-local" id="time_box" name="query_time" min="<%= Time.now.strftime('%Y-%m-%dT%H:%M') %>">
       </div>
 
       <div class="mb-2">
@@ -47,7 +47,7 @@
         <input type="hidden" id="status_box" name="query_status" value="Pending">
       </div>
 
-      <div class="mb-2">
+      <div class="mb-4">
         <label for="reservation_status_box">
           What name is the reservation under?
         </label>
@@ -56,7 +56,7 @@
       </div>
 
         <h3>Optional Eat-up Criteria</h3>
-        <h5 class="mb-3">Specify if you want to ensure your Eat-up partner matches the following:</h5>
+        <h5 class="mb-3">Specify if you want to ensure your Eat-up partner(s) matches the following:</h5>
       <div class="mb-2">
         <label for="age_min">
           Minimum age
@@ -90,7 +90,7 @@
 
       <br>
 
-      <button>
+      <button class="btn btn-success">
         Create Eat-up
       </button>
     </form>
@@ -99,19 +99,19 @@
 
 <br>
 <hr>
-<h2>My Created Eat-Ups</h2>
+<h2>My Created Eat-ups</h2>
 
-<% if @list_of_created_meetings.count == 0 %>
-<div>You haven't created any Eat-ups yet.</div>
+<% if @list_of_created_active_meetings.count == 0 %>
+<div>You haven't created any new Eat-ups yet.</div>
 <% else %>
 <div>
-  <div>
-    <table class="table table-striped table-hover table-bordered table-responsive">
-      <thead class="table-dark">
+  <table class="table table-striped table-hover table-bordered table-responsive">
+    <thead class="table-dark">
       <tr>
         <th>
           Restaurant
         </th>
+
         <th>
           Time of Eat-up
         </th>
@@ -139,10 +139,10 @@
         <th>
         </th>
       </tr>
-      </thead>
+    </thead>
 
-      <% @list_of_created_meetings.each do |a_meeting| %>
-      <tbody class="table-group-divider">
+    <tbody>
+    <% @list_of_created_active_meetings.each do |a_meeting| %>
       <tr>
         <td>
           <%= a_meeting.restaurant.name %>
@@ -152,7 +152,6 @@
           <%= a_meeting.time.strftime("%A, %d %b %Y %l:%M %p") %>
         </td>
 
-        
         <td>
           <%= a_meeting.status %>
         </td>
@@ -173,68 +172,69 @@
         <td>
           <%= time_ago_in_words(a_meeting.created_at) %> ago
         </td>
+
         <td>
           <%= time_ago_in_words(a_meeting.updated_at) %> ago
         </td>
 
         <td>
           <a href="/meetings/<%= a_meeting.id %>">
-            Edit Eat-Up
+            Edit Eat-up
           </a>
         </td>
       </tr>
-      </tbody>
-      <% end %>
-    </table>
-  </div>
-</div>
+  <% end %>
+  </tbody>
 <% end %>
+</table>
 
 <br>
 <hr>
-<h2>My Joined Eat-Ups</h2>
+<h2>My Joined Eat-ups</h2>
 
-<% if @list_of_joined_meetings.count == 0 %>
-<div>You haven't joined any Eat-ups yet.</div>
+<% if @list_of_joined_active_meetings.count == 0 %>
+<div>You haven't joined any new Eat-ups yet.</div>
 <% else %>
 <div>
   <div>
     <table class="table table-striped table-hover table-bordered table-responsive">
       <thead class="table-dark">
-      <tr>
-        <th>
-          Restaurant
-        </th>
-        <th>
-          Time of Eat-up
-        </th>
+        <tr>
+          <th>
+            Restaurant
+          </th>
 
-        <th>
-          Status
-        </th>
+          <th>
+            Time of Eat-up
+          </th>
 
-        <th>
-          Seats Left
-        </th>
+          <th>
+            Status
+          </th>
 
-        <th>
-          Reservation Under
-        </th>
+          <th>
+            Seats Left
+          </th>
 
-        <th>
-          Created at
-        </th>
+          <th>
+            Reservation Under
+          </th>
 
-        <th>
-          Updated at
-        </th>
+          <th>
+            Created at
+          </th>
 
-        <th>
-        </th>
-      </tr>
+          <th>
+            Updated at
+          </th>
+
+          <th>
+          </th>
+        </tr>
       </thead>
+
       <tbody>
-      <% @list_of_joined_meetings.each do |a_meeting| %>
+      <% @list_of_joined_active_meetings.each do |a_meeting| %>
       <tr>
         <td>
           <%= a_meeting.restaurant.name %>
@@ -283,5 +283,5 @@
 
 <br>
 <div>
-  <a href="/meetings/cancelled">See cancelled Eat-ups</a>
+  <a href="/meetings/history">>>Go to past and cancelled Eat-ups</a>
 </div>

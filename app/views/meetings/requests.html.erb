@@ -1,8 +1,8 @@
 <h1>Available Eat-ups</h1>
 
-<% @list_of_meetings = @list_of_meetings - @current_user.meetings %>
+<% @list_of_active_meetings = @list_of_active_meetings - @current_user.meetings %>
 
-<% if @list_of_meetings.count == 0 %>
+<% if @list_of_active_meetings.count == 0 %>
 <div>No available Eat-ups right now. Come back later or <a href="/meetings">create your own!</a></div>
 <br>
 <% else %>
@@ -41,7 +41,7 @@
       </thead>
 
       <tbody>
-      <% @list_of_meetings.each do |a_meeting| %>
+      <% @list_of_active_meetings.each do |a_meeting| %>
 
         <tr>
           <td>
@@ -86,10 +86,9 @@
             </form>
           </td>
         </tr>
-      </tbody>
      <% end %>
+     </tbody>
     </table>
   </div>
 </div>
-
 <% end %>

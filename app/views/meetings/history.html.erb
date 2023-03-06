@@ -1,34 +1,30 @@
-<div>
-  <a href="/meetings">Go Back</a>
-</div>
-
-<h1>
-
-<h1>My Cancelled Eat-Ups</h1>
-
-<% if @list_of_meetings.count == 0 %>
-<div>None of your Eat-ups have been cancelled yet!</div>
+<h2 class="mb-3">My Eat-up History</h2>
+<% if @list_of_past_uncancelled_meetings.count == 0 %>
+<div>You haven't gone to any Eat-ups yet!</div>
 <% else %>
 <div>
   <div>
-    <table border="1">
-      <tr>
-        <th>
-          Restaurant
-        </th>
-        <th>
-          Time of Eat-up
-        </th>
+    <table class="table table-striped table-hover table-bordered table-responsive">
+      <thead class="table-dark">
+        <tr>
+          <th>
+            Restaurant
+          </th>
 
-        <th>
-          Status
-        </th>
-        <th>
-          Updated at
-        </th>
-      </tr>
+          <th>
+            Time of Eat-up
+          </th>
 
-      <% @list_of_created_meetings.each do |a_meeting| %>
+          <th>
+            Reservation Under
+          </th>
+          <th>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+      <% @list_of_past_uncancelled_meetings.each do |a_meeting| %>
       <tr>
         <td>
           <%= a_meeting.restaurant.name %>
@@ -39,15 +35,79 @@
         </td>
   
         <td>
-          <%= a_meeting.status %>
+          <%= a_meeting.reservation_status %>
         </td>
+        <th>
+          <a href="/meetings/review/<%= a_meeting.id %>">Leave a review</a>
+        </th>
+      </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<% end %>
+
+<br>
+<hr>
+
+<h2>Cancelled Eat-ups</h2>
+<h5 class="mb-3">from the past 30 days</h5>
+
+<% if @list_of_cancelled_meetings.count == 0 %>
+<div>None of your Eat-ups have been cancelled yet!</div>
+<% else %>
+<div>
+  <div>
+    <table class="table table-striped table-hover table-bordered table-responsive">
+      <thead class="table-dark">
+        <tr>
+          <th>
+            Restaurant
+          </th>
+          <th>
+            Scheduled time of Eat-up
+          </th>
+
+          <th>
+            Reservation Under
+          </th>
+
+          <th>
+            Cancelled at
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+      <% @list_of_cancelled_meetings.each do |a_meeting| %>
+      <tr>
+        <td>
+          <%= a_meeting.restaurant.name %>
+        </td>
+
+        <td>
+          <%= a_meeting.time.strftime("%A, %d %b %Y %l:%M %p") %>
+        </td>
+
+        <td>
+          <%= a_meeting.reservation_status %>
+        </td>
+
         <td>
           <%= time_ago_in_words(a_meeting.updated_at) %> ago
         </td>
 
       </tr>
       <% end %>
+      </tody>
     </table>
   </div>
 </div>
 <% end %>
+
+<hr>
+<div>
+  <a href="/meetings">Go Back</a>
+</div>
