@@ -4,29 +4,29 @@ class MeetingsController < ApplicationController
     @list_of_meetings = matching_meetings.order({ :created_at => :desc })
 
     @list_of_created_meetings = @current_user.meetings.joins(:meeting_users).where("meeting_users.user_id = ? AND meeting_users.user_order = ?", @current_user.id, 1).order(created_at: :desc).distinct
-    @list_of_created_meetings = @list_of_created_meetings.where.not({:status=>"Cancelled"})
+    @list_of_created_meetings = @list_of_created_meetings.where.not({ :status => "Cancelled" })
 
     @list_of_joined_meetings = @current_user.meetings.joins(:meeting_users).where("meeting_users.user_id = ? AND meeting_users.user_order != ?", @current_user.id, 1).order(created_at: :desc).distinct
-    @list_of_joined_meetings = @list_of_joined_meetings.where.not({:status=>"Cancelled"})
+    @list_of_joined_meetings = @list_of_joined_meetings.where.not({ :status => "Cancelled" })
 
     render({ :template => "meetings/index.html.erb" })
   end
 
   def from_restaurant
     restaurant_id = params.fetch("path_id")
-    matching_restaurants = Restaurant.where({:id => restaurant_id})
+    matching_restaurants = Restaurant.where({ :id => restaurant_id })
     @the_restaurant = matching_restaurants.first
-    render({:template => "meetings/restaurant.html.erb"})
+    render({ :template => "meetings/restaurant.html.erb" })
   end
 
   def available_requests
     user_age = @current_user.age
     user_gender = @current_user.sex
-    
+
     matching_meetings = Meeting.where("age_max > ? OR age_max IS NULL", user_age)
     matching_meetings = Meeting.where("age_min < ? OR age_min IS NULL", user_age)
-    matching_meetings = matching_meetings.where({:sex => user_gender}).or(matching_meetings.where({:sex => "nil"}))
-    matching_meetings = matching_meetings.where({:status => "Pending"})
+    matching_meetings = matching_meetings.where({ :sex => user_gender }).or(matching_meetings.where({ :sex => "nil" }))
+    matching_meetings = matching_meetings.where({ :status => "Pending" })
 
     @q = matching_meetings.ransack(params[:q])
     @list_of_meetings = @q.result.order({ :created_at => :desc })
@@ -34,15 +34,14 @@ class MeetingsController < ApplicationController
     render({ :template => "meetings/requests.html.erb" })
   end
 
-
   def show
     the_id = params.fetch("path_id")
 
     matching_meetings = Meeting.where({ :id => the_id })
 
     @the_meeting = matching_meetings.at(0)
-    @the_meeting_users = MeetingUser.where({:meeting_id => the_id})
-    @this_meeting_user = @the_meeting_users.where({:user_id => @current_user.id}).at(0)
+    @the_meeting_users = MeetingUser.where({ :meeting_id => the_id })
+    @this_meeting_user = @the_meeting_users.where({ :user_id => @current_user.id }).at(0)
 
     render({ :template => "meetings/show.html.erb" })
   end
@@ -51,7 +50,7 @@ class MeetingsController < ApplicationController
     the_meeting = Meeting.new
     restaurant_name = params.fetch("query_restaurant_name")
     the_meeting.time = params.fetch("query_time")
-    the_meeting.restaurant_id = Restaurant.where({:name => restaurant_name}).first.id
+    the_meeting.restaurant_id = Restaurant.where({ :name => restaurant_name }).first.id
     the_meeting.status = params.fetch("query_status")
     the_meeting.reservation_status = params.fetch("query_reservation_status")
     the_meeting.age_min = params.fetch("query_age_min")
@@ -84,11 +83,10 @@ class MeetingsController < ApplicationController
     the_meeting.age_max = params.fetch("query_age_max")
     the_meeting.sex = params.fetch("query_req_gender")
     the_meeting.max_seats = params.fetch("query_max_seats")
-    
 
     if the_meeting.valid?
       the_meeting.save
-      redirect_to("/meetings/#{the_meeting.id}", { :notice => "Eat-up updated successfully."} )
+      redirect_to("/meetings/#{the_meeting.id}", { :notice => "Eat-up updated successfully." })
     else
       redirect_to("/meetings/#{the_meeting.id}", { :alert => the_meeting.errors.full_messages.to_sentence })
     end
@@ -101,13 +99,13 @@ class MeetingsController < ApplicationController
     the_meeting.status = "Cancelled"
     the_meeting.save
 
-    redirect_to("/meetings/cancelled", { :notice => "Eat-up cancelled successfully."} )
+    redirect_to("/meetings/cancelled", { :notice => "Eat-up cancelled successfully." })
   end
 
-  def display_cancelled
+  def display_history
     matching_meetings = @current_user.meetings
-    @list_of_meetings = matching_meetings.where({:status => "cancelled"})
-    render({:template => "/meetings/cancelled.html.erb"})
-
+    @list_of_cancelled_meetings = matching_meetings.where({ :status => "cancelled" })
+    @list_of_past_meetings = matching_meetings.where.({ :time => Now }).where.not({ :status => "cancelled" })
+    render({ :template => "/meetings/history.html.erb" })
   end
 end

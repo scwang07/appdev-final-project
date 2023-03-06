@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
   get("/meetings/availabilities", { :controller => "meetings", :action => "available_requests"})
 
-  get("/meetings/cancelled", { :controller => "meetings", :action => "display_cancelled"})
+  get("/meetings/cancelled", { :controller => "meetings", :action => "display_history"})
   
   get("/meetings/:path_id", { :controller => "meetings", :action => "show" })
 

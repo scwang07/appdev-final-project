@@ -6,6 +6,8 @@
 <div>No available Eat-ups right now. Come back later or <a href="/meetings">create your own!</a></div>
 <br>
 <% else %>
+<div>
+  <div>
     <table class="table table-hover table-bordered table-responsive table-striped">
       <thead class="table-dark">
         <tr>
@@ -78,7 +80,7 @@
             <div>
               <input type="hidden" id="user_box" name="query_user_id" value="<%= @current_user.id %>">
             </div>
-              <button>
+              <button class="btn btn-success">
                 Let's Eat-Up!
               </button>
             </form>
@@ -87,5 +89,7 @@
       </tbody>
      <% end %>
     </table>
+  </div>
+</div>
 
 <% end %>
