@@ -8,6 +8,7 @@
 
 <div>
   <div>
+   <%= will_paginate @list_of_restaurants %>
     <table class="table table-striped table-hover table-bordered table-responsive">
       <thead class="table-dark">
         <tr>
@@ -67,6 +68,7 @@
         <% end %>
       </tbody>
     </table>
+    <%= will_paginate @list_of_restaurants %>
   </div>
 </div>
 

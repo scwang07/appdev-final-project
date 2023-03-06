@@ -14,6 +14,7 @@ gem 'sprockets', '< 4'
 gem 'sassc-rails'
 gem 'faker'
 gem 'ransack'
+gem 'will_paginate'
 
 group :development do
   gem 'htmlbeautifier'

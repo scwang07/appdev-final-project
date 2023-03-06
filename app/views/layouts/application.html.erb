@@ -21,9 +21,14 @@
 
   <body>
   <nav>
-    <% if session[:user_id] != nil %>
+    <% if session[:user_id].nil? or User.count==0 %>
     <ul>
-      <div>Logged in as: <%= @current_user.first_name + " " + @current_user.last_name %></div>
+      <li><a href="/user_sign_in">Sign In</a></li>
+      <li><a href="/user_sign_up">Sign Up</a></li>
+    </ul>
+    <% else %>
+    <ul>
+      <div>Logged in as: <%= @current_user.first_name + " " + @current_user.last_name %>
       <li><a href="/edit_user_profile">Edit Profile</a></li>
       <li><a href="/user_sign_out">Sign Out</a></li>
       <br>
@@ -32,21 +37,17 @@
       <li><a href="/meetings/availabilities">Browse available Eat-ups</a></li>
       <li><a href="/restaurants">Browse Restaurants</a></li>
     </ul>
-    <% else %>
-    <ul>
-      <li><a href="/user_sign_in">Sign In</a></li>
-      <li><a href="/user_sign_up">Sign Up</a></li>
-    </ul>
     <% end %>
+
     </nav>
     <% if notice.present? %>
-      <div class="alert">
+      <div class="alert alert-success" role="alert">
         <%= notice %>
       </div>
     <% end %>
 
     <% if alert.present? %>
-      <div class="alert">
+      <div class="alert alert-danger" role="alert">
         <%= alert %>
       </div>
     <% end %>
