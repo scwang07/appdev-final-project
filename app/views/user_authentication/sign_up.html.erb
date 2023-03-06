@@ -10,14 +10,24 @@
   <div>
     <label for="dob_box">Dob</label>
       
-    <input type="text" id="dob_box" name="query_dob">
+    <input type="text" id="dob_box" name="query_dob" placeholder="MM/DD/YYYY">
   </div>
          
-  <div>
-    <label for="sex_box">Sex</label>
-      
-    <input type="text" id="sex_box" name="query_sex">
-  </div>
+      <div>
+        <label for="gender">
+          Gender
+        </label>
+
+        <select id="gender" name="query_gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Bi">Bisexual</option>          
+          <option value="Trans">Transexual</option>
+          <option value="Asexual">Asexual</option>
+          <option value="Pansexual">Pansexual</option>
+          <option value="Non-conforming">Non-conforming</option>
+        </select>
+      </div>
          
   <div>
     <label for="first_name_box">First name</label>

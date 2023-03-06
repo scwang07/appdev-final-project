@@ -1,109 +1,91 @@
 <h1>Available Eat-ups</h1>
 
-<%= search_form_for @q do |f| %>
-  <p>Narrow down results:</p>
-
-  <div>
-    <%= f.label :time_gteq, "Time range beginning" %>
-    <%= f.text_field :time_gteq, :placeholder => "Filter for dates after..." %>
-  </div>
-
-    <div>
-    <%= f.label :time_lteq, "Time range end" %>
-    <%= f.text_field :time_lteq, :placeholder => "Filter for dates before..." %>
-  </div>
-
-  <%= f.submit :class => "btn btn-primary btn-block" %>
-  
-  <a href="/meetings/availabilities">Clear filters</a>
-
-<% end %>
-
-<br>
-
 <% @list_of_meetings = @list_of_meetings - @current_user.meetings %>
 
 <% if @list_of_meetings.count == 0 %>
 <div>No available Eat-ups right now. Come back later or <a href="/meetings">create your own!</a></div>
 <br>
 <% else %>
-<div>
-  <div>
-    <table border="1">
-      <tr>
-        <th>
-          Restaurant
-        </th>
-        <th>
-          Time of Eat-up
-        </th>
+    <table class="table table-hover table-bordered table-responsive table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>
+            Restaurant
+          </th>
 
-        <th>
-          Seats Left
-        </th>
-        <th>
-          Reservation already made?
-        </th>
+          <th>
+            Time of Eat-up
+          </th>
 
-        <th>
-          Created at
-        </th>
+          <th>
+            Seats Left
+          </th>
 
-        <th>
-          Updated at
-        </th>
+          <th>
+            Reservation Under
+          </th>
 
-        <th>
-        </th>
-      </tr>
+          <th>
+            Created at
+          </th>
 
+          <th>
+            Updated at
+          </th>
+
+          <th>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
       <% @list_of_meetings.each do |a_meeting| %>
-      <tr>
-        <td>
-          <%= a_meeting.restaurant.name %>
-        </td>
 
-        <td>
-          <%= a_meeting.time.strftime("%A, %d %b %Y %l:%M %p") %>
-        </td>
+        <tr>
+          <td>
+            <%= a_meeting.restaurant.name %>
+          </td>
         
-        <td>
-          <%= a_meeting.seats_remaining %>
-          <% if a_meeting.seats_remaining == 1 %>
-            seat remaining
-          <% else %>
-            seats remaining
-          <% end %>
-        </td>
+          <td>
+            <%= a_meeting.time.strftime("%A, %d %b %Y %l:%M %p") %>
+          </td>
+          
+          <td>
+            <%= a_meeting.seats_remaining %>
+            <% if a_meeting.seats_remaining == 1 %>
+              seat remaining
+            <% else %>
+              seats remaining
+            <% end %>
+          </td>
 
-        <td>
-          <%= a_meeting.reservation_status %>
-        </td>
+          <td>
+            <%= a_meeting.reservation_status %>
+          </td>
 
-        <td>
-          <%= time_ago_in_words(a_meeting.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_meeting.updated_at) %> ago
-        </td>
+          <td>
+            <%= time_ago_in_words(a_meeting.created_at) %> ago
+          </td>
+          <td>
+            <%= time_ago_in_words(a_meeting.updated_at) %> ago
+          </td>
 
-        <td>
-          <form action="/insert_meeting_user" method="post">
-          <div>
-            <input type="hidden" id="meeting_box" name="query_meeting_id" value="<%= a_meeting.id %>">
-          </div>
-          <div>
-            <input type="hidden" id="user_box" name="query_user_id" value="<%= @current_user.id %>">
-          </div>
-            <button>
-              Let's Eat-Up!
-            </button>
-          </form>
-          </a>
-        </td>
-      </tr>
-      <% end %>
+          <td>
+            <form action="/insert_meeting_user" method="post">
+            <div>
+              <input type="hidden" id="meeting_box" name="query_meeting_id" value="<%= a_meeting.id %>">
+            </div>
+            <div>
+              <input type="hidden" id="user_box" name="query_user_id" value="<%= @current_user.id %>">
+            </div>
+              <button>
+                Let's Eat-Up!
+              </button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+     <% end %>
     </table>
-  </div>
-</div>
+
 <% end %>

@@ -10,12 +10,12 @@
 
 <div>
   <div>
-    <h2>
+    <h2 class="mb-3">
       Create a new Eat-up request
     </h2>
 
     <form action="/insert_meeting" action="/insert_meeting_user" method="post">
-      <div>
+      <div class="mb-2">
         <label for="time_box">
           Time
         </label>
@@ -23,23 +23,23 @@
         <input type="datetime-local" id="time_box" name="query_time">
       </div>
 
-      <div>
+      <div class="mb-2">
         <label for="restaurant_id_box">
           Restaurant
         </label>
 
-        <select id="restaurant_id_box" name="query_restaurant_id">
+        <select id="restaurant_id_box" name="query_restaurant_name">
           <% Restaurant.all.each do |a_restaurant| %>
             <option value="<%= a_restaurant.name %>"><%= a_restaurant.name %></option>
           <% end %>
         </select>
       </div>
 
-      <label for="max_seats_box">
-        Max number of seats
-      </label>
+      <div class="mb-2">
+        <label for="max_seats_box">
+          Max number of seats
+        </label>
 
-      <div>
         <input type ="text" id="max_seats_box" name="query_max_seats">
       </div>
 
@@ -47,24 +47,24 @@
         <input type="hidden" id="status_box" name="query_status" value="Pending">
       </div>
 
-      <div>
+      <div class="mb-2">
         <label for="reservation_status_box">
-          Reservation already made? Yes/No
+          What name is the reservation under?
         </label>
 
         <input type="text" id="reservation_status_box" name="query_reservation_status">
       </div>
 
         <h3>Optional Eat-up Criteria</h3>
-        <h4>Specify if you want to ensure your Eat-up partner matches the following:</h4>
-      <div>
+        <h5 class="mb-3">Specify if you want to ensure your Eat-up partner matches the following:</h5>
+      <div class="mb-2">
         <label for="age_min">
           Minimum age
         </label>
 
         <input type="text" id="age_min" placeholder="optional" name="query_age_min">
       </div>
-      <div>
+      <div class="mb-2">
         <label for="age_max">
           Maximum age
         </label>
@@ -83,14 +83,15 @@
           <option value="Bi">Bisexual</option>          
           <option value="Trans">Transexual</option>
           <option value="Asexual">Asexual</option>
-          <option value="Non-binary">Non-binary</option>
+          <option value="Pansexual">Pansexual</option>
+          <option value="Non-conforming">Non-conforming</option>
         </select>
       </div>
 
       <br>
 
       <button>
-        Create Eat-up invitation
+        Create Eat-up
       </button>
     </form>
   </div>
@@ -105,7 +106,8 @@
 <% else %>
 <div>
   <div>
-    <table border="1">
+    <table class="table table-striped table-hover table-bordered table-responsive">
+      <thead class="table-dark">
       <tr>
         <th>
           Restaurant
@@ -123,7 +125,7 @@
         </th>
 
         <th>
-          Reservation?
+          Reservation Under
         </th>
 
         <th>
@@ -137,8 +139,10 @@
         <th>
         </th>
       </tr>
+      </thead>
 
       <% @list_of_created_meetings.each do |a_meeting| %>
+      <tbody class="table-group-divider">
       <tr>
         <td>
           <%= a_meeting.restaurant.name %>
@@ -179,6 +183,7 @@
           </a>
         </td>
       </tr>
+      </tbody>
       <% end %>
     </table>
   </div>
@@ -194,7 +199,8 @@
 <% else %>
 <div>
   <div>
-    <table border="1">
+    <table class="table table-striped table-hover table-bordered table-responsive">
+      <thead class="table-dark">
       <tr>
         <th>
           Restaurant
@@ -212,7 +218,7 @@
         </th>
 
         <th>
-          Reservation?
+          Reservation Under
         </th>
 
         <th>
@@ -226,7 +232,8 @@
         <th>
         </th>
       </tr>
-
+      </thead>
+      <tbody>
       <% @list_of_joined_meetings.each do |a_meeting| %>
       <tr>
         <td>
@@ -268,7 +275,13 @@
         </td>
       </tr>
       <% end %>
+      </tbody>
     </table>
   </div>
 </div>
 <% end %>
+
+<br>
+<div>
+  <a href="/meetings/cancelled">See cancelled Eat-ups</a>
+</div>

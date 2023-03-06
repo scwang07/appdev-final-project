@@ -55,6 +55,6 @@ class RestaurantsController < ApplicationController
 
     the_restaurant.destroy
 
-    redirect_to("/restaurants", { :notice => "Restaurant deleted successfully."} )
+    redirect_to("/restaurants/", { :notice => "Restaurant deleted successfully."} )
   end
 end

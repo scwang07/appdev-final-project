@@ -8,60 +8,64 @@
 
 <div>
   <div>
-    <table border="1">
-      <tr>
-        <th>
-          No
-        </th>
+    <table class="table table-striped table-hover table-bordered table-responsive">
+      <thead class="table-dark">
+        <tr>
+          <th>
+            No
+          </th>
 
-        <th>
-          Name
-        </th>
+          <th>
+            Name
+          </th>
 
-        <th>
-          Description
-        </th>
+          <th>
+            Description
+          </th>
 
-        <th>
-          Location
-        </th>
+          <th>
+            Location
+          </th>
 
-        <th>
-          Takes reservations?
-        </th>
-        <th>
-        </th>
-      </tr>
+          <th>
+            Takes reservations?
+          </th>
+          <th>
+          </th>
+        </tr>
+      </thead>
 
-      <% @list_of_restaurants.each do |a_restaurant| %>
-      <tr>
-        <td>
-          <%= a_restaurant.id %>
-        </td>
+      <tbody>
+        <% @list_of_restaurants.each do |a_restaurant| %>
+        <tr>
+          <td>
+            <%= a_restaurant.id %>
+          </td>
 
-        <td>
-          <a href="/restaurants/<%= a_restaurant.id %>"><%= a_restaurant.name %></a>
-        </td>
+          <td>
+            <a href="/restaurants/<%= a_restaurant.id %>"><%= a_restaurant.name %></a>
+          </td>
 
-        <td>
-          <%= a_restaurant.description %>
-        </td>
+          <td>
+            <%= a_restaurant.description %>
+          </td>
 
-        <td>
-          <%= a_restaurant.location %>
-        </td>
+          <td>
+            <%= a_restaurant.location %>
+          </td>
 
-        <td>
-          <%= a_restaurant.reservation_possible %>
-        </td>
+          <td>
+            <%= a_restaurant.reservation_possible %>
+          </td>
 
-        <td>
-          <a href="/meetings/restaurant/<%= a_restaurant.id %>">
-            Organize an Eat-up here!
-          </a>
-        </td>
-      </tr>
-      <% end %>
+          <td>
+            <a href="/meetings/restaurant/<%= a_restaurant.id %>">
+              Organize an Eat-up here!
+            </a>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
     </table>
   </div>
 </div>

@@ -1,0 +1,51 @@
+<div>
+  <a href="/meetings">Go Back</a>
+</div>
+
+<h1>My Cancelled Eat-Ups</h1>
+
+<% if @list_of_meetings.count == 0 %>
+<div>None of your Eat-ups have been cancelled yet!</div>
+<% else %>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          Restaurant
+        </th>
+        <th>
+          Time of Eat-up
+        </th>
+
+        <th>
+          Status
+        </th>
+        <th>
+          Updated at
+        </th>
+      </tr>
+
+      <% @list_of_created_meetings.each do |a_meeting| %>
+      <tr>
+        <td>
+          <%= a_meeting.restaurant.name %>
+        </td>
+
+        <td>
+          <%= a_meeting.time.strftime("%A, %d %b %Y %l:%M %p") %>
+        </td>
+  
+        <td>
+          <%= a_meeting.status %>
+        </td>
+        <td>
+          <%= time_ago_in_words(a_meeting.updated_at) %> ago
+        </td>
+
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+<% end %>
