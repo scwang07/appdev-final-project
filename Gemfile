@@ -15,6 +15,8 @@ gem 'sassc-rails'
 gem 'faker'
 gem 'ransack'
 gem 'will_paginate'
+gem 'twilio-ruby'
+gem 'mailgun-ruby'
 
 group :development do
   gem 'htmlbeautifier'

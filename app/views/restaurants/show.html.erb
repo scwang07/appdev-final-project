@@ -1,31 +1,20 @@
 <div>
   <div>
     <h1>
-      Restaurant #<%= @the_restaurant.id %> details
+      <%= @the_restaurant.name %>
     </h1>
 
     <div>
-      <div>
-        <a href="/restaurants">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_restaurant/<%= @the_restaurant.id %>">
-          Delete restaurant
-        </a>
+      <div class="mb-3">
+        <form action="/delete_restaurant/<%= @the_restaurant.id %>">
+          <button class="btn btn-danger">
+            Delete restauant
+          </button>
+        </form>
       </div>
     </div>
 
     <dl>
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_restaurant.name %>
-      </dd>
-
       <dt>
         Description
       </dt>
@@ -66,7 +55,6 @@
 
 <hr>
 
-
 <div>
   <div>
     <h2>
@@ -102,7 +90,7 @@
         <input type="checkbox" id="reservation_possible_box" name="query_reservation_possible" value="1" <%= "checked" if @the_restaurant.reservation_possible %>>
 
         <label for="reservation_possible_box">
-            Reservation possible
+          Reservation possible
         </label>
       </div>
 
@@ -114,3 +102,9 @@
 </div>
 
 <hr>
+
+<div>
+  <a href="/restaurants">
+    Go back
+  </a>
+</div>

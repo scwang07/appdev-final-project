@@ -53,6 +53,12 @@ class MeetingsController < ApplicationController
     the_meeting = Meeting.new
     restaurant_name = params.fetch("query_restaurant_name")
     the_meeting.time = params.fetch("query_time")
+    the_meeting.time = the_meeting.time.advance(hours: +6)
+    puts "*************"
+    puts "#{the_meeting.time}"
+    puts the_meeting.time.class
+    puts "**************"
+
     the_meeting.restaurant_id = Restaurant.where({ :name => restaurant_name }).first.id
     the_meeting.status = params.fetch("query_status")
     the_meeting.reservation_status = params.fetch("query_reservation_status")
