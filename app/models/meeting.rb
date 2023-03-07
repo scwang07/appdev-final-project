@@ -27,4 +27,5 @@ class Meeting < ApplicationRecord
     seats_remaining = self.max_seats - self.meeting_users.count
     return seats_remaining
   end
+
 end

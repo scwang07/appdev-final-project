@@ -1,15 +1,11 @@
 <div>
-  <a href="/restaurants">Go Back</a>
-</div>
-
-<div>
   <div>
     <h1>
-      Open a new Eat-up at <%= @the_restaurant.name %>
+      Start a new Eat-up at <%= @the_restaurant.name %>
     </h1>
 
     <form action="/insert_meeting" action="/insert_meeting_user" method="post">
-      <div>
+      <div class="mb-2">
         <label for="time_box">
           Time
         </label>
@@ -17,7 +13,7 @@
         <input type="datetime-local" id="time_box" name="query_time">
       </div>
 
-      <div>
+      <div class="mb-2">
         <label for="restaurant_name_box">
           Restaurant
         </label>
@@ -25,11 +21,11 @@
       <input type="text" id="restaurant_name_box" name="query_restaurant_name" value="<%= @the_restaurant.name %>" readonly>
       </div>
 
-      <label for="max_seats_box">
-        Max number of seats
-      </label>
+      <div class="mb-2">
+        <label for="max_seats_box">
+          Max number of seats
+        </label>
 
-      <div>
         <input type ="text" id="max_seats_box" name="query_max_seats">
       </div>
 
@@ -37,7 +33,7 @@
         <input type="hidden" id="status_box" name="query_status" value="Pending">
       </div>
 
-      <div>
+      <div class="mb-3">
         <label for="reservation_status_box">
           What name is the reservation under?
         </label>
@@ -46,22 +42,22 @@
       </div>
 
         <h3>Optional Eat-up Criteria</h3>
-        <h4>Specify if you want to ensure your Eat-up partner matches the following:</h4>
-      <div>
+        <h5>Specify if you want to ensure your Eat-up partner(s) matches the following:</h5>
+      <div class="mb-2">
         <label for="age_min">
           Minimum age
         </label>
 
         <input type="text" id="age_min" placeholder="optional" name="query_age_min">
       </div>
-      <div>
+      <div class="mb-2">
         <label for="age_max">
           Maximum age
         </label>
 
         <input type="text" id="age_max" placeholder="optional" name="query_age_max">
       </div>
-      <div>
+      <div class="mb-2">
         <label for="req_gender">
           Gender
         </label>
@@ -80,9 +76,15 @@
 
       <br>
 
-      <button>
+      <button class="btn btn-success">
         Create Eat-up
       </button>
     </form>
   </div>
+</div>
+
+<hr>
+
+<div>
+  <a href="/restaurants">Go Back</a>
 </div>

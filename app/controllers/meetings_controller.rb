@@ -25,8 +25,11 @@ class MeetingsController < ApplicationController
     user_age = @current_user.age
     user_gender = @current_user.sex
 
-    matching_meetings = Meeting.where("age_max > ? OR age_max IS NULL", user_age)
-    matching_meetings = Meeting.where("age_min < ? OR age_min IS NULL", user_age)
+    @q = Meeting.ransack(params[:q])
+    matching_meetings = @q.result(:distinct => true).includes(:users, :restaurant)
+
+    matching_meetings = matching_meetings.where("age_max > ? OR age_max IS NULL", user_age)
+    matching_meetings = matching_meetings.where("age_min < ? OR age_min IS NULL", user_age)
     matching_meetings = matching_meetings.where({ :sex => user_gender }).or(matching_meetings.where({ :sex => "nil" }))
     matching_meetings = matching_meetings.where({ :status => "Pending" })
     @list_of_meetings = matching_meetings.order({ :created_at => :desc })
@@ -54,11 +57,6 @@ class MeetingsController < ApplicationController
     restaurant_name = params.fetch("query_restaurant_name")
     the_meeting.time = params.fetch("query_time")
     the_meeting.time = the_meeting.time.advance(hours: +6)
-    puts "*************"
-    puts "#{the_meeting.time}"
-    puts the_meeting.time.class
-    puts "**************"
-
     the_meeting.restaurant_id = Restaurant.where({ :name => restaurant_name }).first.id
     the_meeting.status = params.fetch("query_status")
     the_meeting.reservation_status = params.fetch("query_reservation_status")

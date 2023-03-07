@@ -20,39 +20,70 @@
   </head>
 
   <body>
-  <nav>
-    <% if session[:user_id].nil? or User.count==0 %>
-    <ul>
-      <li><a href="/user_sign_in">Sign In</a></li>
-      <li><a href="/user_sign_up">Sign Up</a></li>
-    </ul>
-    <% else %>
-    <ul>
-      <div>Logged in as: <%= @current_user.first_name + " " + @current_user.last_name %>
-      <li><a href="/edit_user_profile">Edit Profile</a></li>
-      <li><a href="/user_sign_out">Sign Out</a></li>
-      <br>
-      <li><a href="/">Home</a></li>
-      <li><a href="/meetings">My Eat-ups</a></li>
-      <li><a href="/meetings/availabilities">Browse available Eat-ups</a></li>
-      <li><a href="/restaurants">Browse Restaurants</a></li>
-    </ul>
-    <% end %>
+    <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+      <div class="container-fluid">
+        <% if session[:user_id].nil? or User.count==0 %>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/user_sign_in">Sign In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/user_sign_up">Sign Up</a>
+            </li>
+          </ul>
+        <% else %>
+          <a class="navbar-brand" href="#">Let's Eat-up!</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-    </nav>
-    <% if notice.present? %>
-      <div class="alert alert-success" role="alert">
-        <%= notice %>
-      </div>
-    <% end %>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/meetings">My Eat-ups</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/meetings/availabilities">Browse available Eat-ups</a>
+              </li>
 
-    <% if alert.present? %>
-      <div class="alert alert-danger" role="alert">
-        <%= alert %>
-      </div>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/restaurants">Browse Restaurants</a>
+              </li>
+            </ul>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/edit_user_profile">Edit Profile</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/user_sign_out">Sign Out</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     <% end %>
-    <%= yield %>
-    <br>
-    	© Copyright 2023
-  </body>
+  </nav>
+
+  <br>
+  <% if notice.present? %>
+    <div class="alert alert-success" role="alert">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <% if alert.present? %>
+    <div class="alert alert-danger" role="alert">
+      <%= alert %>
+    </div>
+  <% end %>
+  <%= yield %>
+  <br>
+  © Copyright 2023
+</body>
 </html>
