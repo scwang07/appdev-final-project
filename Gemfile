@@ -17,6 +17,7 @@ gem 'ransack'
 gem 'will_paginate'
 gem 'twilio-ruby'
 gem 'mailgun-ruby'
+gem 'bootstrap-will_paginate'
 
 group :development do
   gem 'htmlbeautifier'

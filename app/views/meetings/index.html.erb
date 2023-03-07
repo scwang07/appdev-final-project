@@ -20,7 +20,7 @@
           Time
         </label>
 
-        <input type="datetime-local" id="time_box" name="query_time">
+        <input type="datetime-local" id="time_box" name="query_time" min= "<%= DateTime.now.strftime('%Y-%m-%dT%H:%M:%S')%>">
       </div>
 
       <div class="mb-2">
