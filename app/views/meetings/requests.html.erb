@@ -2,10 +2,11 @@
 
 <% @list_of_active_meetings = @list_of_active_meetings - @current_user.meetings %>
 
-<% if @list_of_active_meetings.count == 0 %>
+<% if @list_of_active_meetings.count <= 0 %>
 <div>No available Eat-ups right now. Come back later or <a href="/meetings">create your own!</a></div>
 <br>
 <% else %>
+
 <div>
   <div>
     <table class="table table-hover table-bordered table-responsive table-striped">
@@ -49,7 +50,7 @@
           </td>
         
           <td>
-            <%= a_meeting.time..advance(hours: -6).strftime("%A, %d %b %Y %l:%M %p") %>
+            <%= a_meeting.time.advance(hours: -6).strftime("%A, %d %b %Y %l:%M %p") %>
           </td>
           
           <td>

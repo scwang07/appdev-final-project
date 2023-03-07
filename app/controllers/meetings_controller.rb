@@ -29,12 +29,12 @@ class MeetingsController < ApplicationController
     matching_meetings = Meeting.where("age_min < ? OR age_min IS NULL", user_age)
     matching_meetings = matching_meetings.where({ :sex => user_gender }).or(matching_meetings.where({ :sex => "nil" }))
     matching_meetings = matching_meetings.where({ :status => "Pending" })
+    @list_of_meetings = matching_meetings.order({ :created_at => :desc })
 
-    @q = matching_meetings.ransack(params[:q])
-    @list_of_meetings = @q.result.order({ :created_at => :desc })
     @list_of_active_meetings = @list_of_meetings.where("time > ?", Time.now)
 
     render({ :template => "meetings/requests.html.erb" })
+
   end
 
   def show

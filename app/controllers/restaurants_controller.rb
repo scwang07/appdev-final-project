@@ -1,6 +1,7 @@
 class RestaurantsController < ApplicationController
   def index
-    matching_restaurants = Restaurant.all
+    @q = Restaurant.ransack(params[:q])
+    matching_restaurants = @q.result
 
     @list_of_restaurants = matching_restaurants.order({ :created_at => :asc }).paginate(page: params[:page], per_page: 10)
 
